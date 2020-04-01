@@ -1,4 +1,4 @@
-package hw3;
+package hw3.display;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import javax.swing.JPanel;
+
+import hw3.Life;
 
 public class LifePanel extends JPanel {
 

@@ -1,4 +1,4 @@
-package hw3;
+package hw3.display;
 
 import java.awt.BorderLayout;
 

@@ -1,6 +1,8 @@
-package hw3;
+package hw3.display;
 
 import javax.swing.SwingUtilities;
+
+import hw3.Life;
 
 public class Program {
 
