@@ -54,48 +54,27 @@ public class GameOfLifePanel extends JPanel {
 	}
 
 	private void drawGrid(Graphics g) {
-		final int rowOffset = (getGridWidth() / 2) - (simulation.getRows() / 2);
-		final int colOffset = displaycol - ((getGridHeight() / 2) - (simulation.getColumns() / 2));
-		for (int displayrow = getGridWidth() - 1; displayrow >= 0; displayrow -= 1) {
-			for (int displaycol = getGridHeight() - 1; displaycol >= 0; displaycol -= 1) {
-				// Display the cells in the center
-				int row = displayrow - rowOffset;
-				int col = displaycol - colOffset;
-				Rectangle gridSquare = new Rectangle(gridSize * displaycol, gridSize * displayrow, gridSize, gridSize);
-
-				if (row >= 0 && col >= 0 && row < simulation.getRows() && col < simulation.getColumns()) {
-//					Skip
-					g.setColor(active);
-//
-//					if (simulation.getCell(row, col).isAlive()) {
-//						g.fillRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
-//					} else {
-//						g.drawRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
-//					}
-				} else {
-					g.setColor(inactive);
-					g.drawRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
-				}
+		// Draw a grid over the whole thing
+		g.setColor(inactive);
+		for (int displayrow = 0; displayrow < getGridWidth(); displayrow++) {
+			for (int displaycol = 0; displaycol < getGridHeight(); displaycol++) {
+				g.drawRect(gridSize * displaycol, gridSize * displayrow, gridSize, gridSize);
 			}
 		}
-		for (int displayrow = getGridWidth() - 1; displayrow >= 0; displayrow -= 1) {
-			for (int displaycol = getGridHeight() - 1; displaycol >= 0; displaycol -= 1) {
-				// Display the cells in the center
-				int row = displayrow - rowOffset;
-				int col = displaycol - colOffset;
-				Rectangle gridSquare = new Rectangle(gridSize * displaycol, gridSize * displayrow, gridSize, gridSize);
 
-				if (row >= 0 && col >= 0 && row < simulation.getRows() && col < simulation.getColumns()) {
-					g.setColor(active);
+		// Display the cells in the center
+		final int rowOffset = (getGridWidth() / 2) - (simulation.getRows() / 2);
+		final int colOffset = (getGridHeight() / 2) - (simulation.getColumns() / 2);
+		g.setColor(active);
+		for (int row = 0; row < simulation.getRows(); row++) {
+			for (int col = 0; col < simulation.getColumns(); col++) {
+				Rectangle gridSquare = new Rectangle(gridSize * (col + colOffset), gridSize * (row + rowOffset),
+						gridSize, gridSize);
 
-					if (simulation.getCell(row, col).isAlive()) {
-						g.fillRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
-					} else {
-						g.drawRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
-					}
+				if (simulation.getCell(row, col).isAlive()) {
+					g.fillRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
 				} else {
-//					g.setColor(inactive);
-//					g.drawRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
+					g.drawRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
 				}
 			}
 		}
