@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
 
 	public MainFrame(LifePanel lifePanel, ControlPanel controlPanel) {
 		setTitle("Homework 3");
-		setIconImage(new ImageIcon("icons/window_icon.png").getImage());
+		setIconImage(new ImageIcon(getClass().getResource("resources/window_icon.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		add(controlPanel, BorderLayout.NORTH);

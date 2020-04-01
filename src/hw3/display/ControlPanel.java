@@ -27,11 +27,15 @@ public class ControlPanel extends JPanel {
 	public static final int ANIMATION_FPS_MIN = 1;
 	public static final int ANIMATION_FPS_MAX = 30;
 
-	private final ImageIcon playButtonDisplay = new ImageIcon("icons/resume_co.png");
-	private final ImageIcon pauseButtonDisplay = new ImageIcon("icons/suspend_co.png");
-	private final ImageIcon nextButtonDisplay = new ImageIcon("icons/stepover_co.png");
+	private ImageIcon playButtonDisplay;
+	private ImageIcon pauseButtonDisplay;
+	private ImageIcon nextButtonDisplay;
 
 	public ControlPanel(LifePanel lifePanel) {
+		playButtonDisplay = new ImageIcon(getClass().getResource("resources/resume_co.png"));
+		pauseButtonDisplay = new ImageIcon(getClass().getResource("resources/suspend_co.png"));
+		nextButtonDisplay = new ImageIcon(getClass().getResource("resources/stepover_co.png"));
+
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		animationTimer = new Timer(1000 / DEFAULT_ANIMATION_FPS, new ActionListener() {
 			@Override
