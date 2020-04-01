@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 import java.util.Hashtable;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -23,12 +23,15 @@ public class ControlPanel extends JPanel {
 	private static final long serialVersionUID = 6383142926743409714L;
 	// Move to the next generation every so many seconds.
 	Timer animationTimer;
-	public static final int DEFAULT_ANIMATION_FPS = 10;
+	public static final int DEFAULT_ANIMATION_FPS = 5;
 	public static final int ANIMATION_FPS_MIN = 1;
 	public static final int ANIMATION_FPS_MAX = 30;
 
+	private final ImageIcon playButtonDisplay = new ImageIcon("icons/resume_co.png");
+	private final ImageIcon pauseButtonDisplay = new ImageIcon("icons/suspend_co.png");
+	private final ImageIcon nextButtonDisplay = new ImageIcon("icons/stepover_co.png");
+
 	public ControlPanel(LifePanel lifePanel) {
-		setBorder(new EmptyBorder(10, 10, 10, 10));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		animationTimer = new Timer(1000 / DEFAULT_ANIMATION_FPS, new ActionListener() {
 			@Override
@@ -81,7 +84,7 @@ public class ControlPanel extends JPanel {
 	 * @param lifePanel A reference to our simulation's display.
 	 */
 	private void addNextGenerationButton(LifePanel lifePanel) {
-		JButton nextButton = new JButton("Next Generation");
+		JButton nextButton = new JButton(nextButtonDisplay);
 		nextButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -99,16 +102,18 @@ public class ControlPanel extends JPanel {
 	 * @param lifePanel A reference to our simulation's display.
 	 */
 	private void addPausePlayButton(LifePanel lifePanel) {
-		JButton pausePlayButton = new JButton("Play");
+		JButton pausePlayButton = new JButton(playButtonDisplay);
 		ActionListener pausePlayButtonListener = new ActionListener() {
 			@Override
-			// Toggle timer/label text
+			// Move next generation, then toggle timer/label text
 			public void actionPerformed(ActionEvent e) {
+				lifePanel.nextGeneration();
+
 				if (animationTimer.isRunning()) {
-					pausePlayButton.setText("Play");
+					pausePlayButton.setIcon(playButtonDisplay);
 					animationTimer.stop();
 				} else {
-					pausePlayButton.setText("Pause");
+					pausePlayButton.setIcon(pauseButtonDisplay);
 					animationTimer.restart();
 				}
 			}

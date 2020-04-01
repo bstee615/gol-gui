@@ -25,7 +25,6 @@ public class LifePanel extends JPanel {
 
 	public LifePanel(Life simulation) {
 		this.simulation = simulation;
-		setVisible(true);
 	}
 
 	/**
