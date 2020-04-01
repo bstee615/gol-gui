@@ -15,10 +15,15 @@ public class ControlPanel extends JPanel {
 	 * Unique Serialization ID
 	 */
 	private static final long serialVersionUID = 6383142926743409714L;
-	private static final int animationTimeoutMs = 1000;
+	public static final int animationTimeoutMs = 1000;
 
-	private void addNextFrameButton(LifePanel lifePanel) {
-		JButton nextButton = new JButton("Next Frame");
+	/**
+	 * Add a button that moves the simulation to the next generation.
+	 * 
+	 * @param lifePanel A reference to our simulation's display.
+	 */
+	private void addNextGenerationButton(LifePanel lifePanel) {
+		JButton nextButton = new JButton("Next Generation");
 		nextButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -29,9 +34,16 @@ public class ControlPanel extends JPanel {
 		add(nextButton);
 	}
 
+	/**
+	 * Add a button that continues to move the simulation to the next generation
+	 * according to {@link animationTimeoutMs}.
+	 * 
+	 * @param lifePanel A reference to our simulation's display.
+	 */
 	private void addPausePlayButton(LifePanel lifePanel) {
 		JButton pausePlayButton = new JButton("Play");
 		ActionListener pausePlayButtonListener = new ActionListener() {
+			// Move to the next generation every so many seconds.
 			Timer timer = new Timer(animationTimeoutMs, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -40,6 +52,7 @@ public class ControlPanel extends JPanel {
 			});
 
 			@Override
+			// Toggle timer/label text
 			public void actionPerformed(ActionEvent e) {
 				if (timer.isRunning()) {
 					pausePlayButton.setText("Play");
@@ -57,7 +70,7 @@ public class ControlPanel extends JPanel {
 	public ControlPanel(LifePanel lifePanel) {
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		addNextFrameButton(lifePanel);
+		addNextGenerationButton(lifePanel);
 		addPausePlayButton(lifePanel);
 	}
 }

@@ -18,17 +18,20 @@ public class LifePanel extends JPanel {
 	public static final int gridCellSize = 20;
 	public static final int minimumGridWidth = 30 * gridCellSize;
 
-	private static final Color inactiveColor = Color.lightGray;
-	private static final Color activeColor = Color.BLACK;
+	public static final Color inactiveColor = Color.lightGray;
+	public static final Color activeColor = Color.BLACK;
 
 	private Life simulation;
 
 	public LifePanel(Life simulation) {
 		this.simulation = simulation;
-		setSize(getPreferredSize());
 		setVisible(true);
 	}
 
+	/**
+	 * Move to the next generation and update the display. Call this method rather
+	 * than {@link simulation#nextGeneration()}.
+	 */
 	public void nextGeneration() {
 		simulation.nextGeneration();
 		repaint();
@@ -48,14 +51,15 @@ public class LifePanel extends JPanel {
 	}
 
 	private void drawGrid(Graphics g) {
+		// Dimensions of this panel in terms of cells
 		final int gridWidth = getPreferredSize().width / gridCellSize;
 		final int gridHeight = getPreferredSize().height / gridCellSize;
 
 		// Draw a gray grid over the whole thing
 		g.setColor(inactiveColor);
-		for (int displayrow = 0; displayrow < gridWidth; displayrow++) {
-			for (int displaycol = 0; displaycol < gridHeight; displaycol++) {
-				g.drawRect(gridCellSize * displaycol, gridCellSize * displayrow, gridCellSize, gridCellSize);
+		for (int row = 0; row < gridWidth; row++) {
+			for (int col = 0; col < gridHeight; col++) {
+				g.drawRect(gridCellSize * col, gridCellSize * row, gridCellSize, gridCellSize);
 			}
 		}
 
