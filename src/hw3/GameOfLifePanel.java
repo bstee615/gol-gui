@@ -17,12 +17,16 @@ public class GameOfLifePanel extends JPanel {
 
 	public GameOfLifePanel(Life simulation) {
         this.simulation = simulation;
-//		setSize(gridSize * simulation.getColumns(), gridSize * simulation.getRows());
         setVisible(true);
 	}
 	
 	public void setGridSize(int newGridSize) {
 		gridSize = newGridSize;
+	}
+	
+	public void nextGeneration() {
+		simulation.nextGeneration();
+		repaint();
 	}
 	
 	@Override
