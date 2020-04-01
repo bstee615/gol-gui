@@ -19,13 +19,13 @@ public class Program {
 
 	public static void main(String args[]) {
 		Life simulation = new Life(grid, born, survive);
-		GameOfLifePanel golPanel = new GameOfLifePanel(simulation);
-		ControlPanel controlPanel = new ControlPanel(golPanel);
+		LifePanel lifePanel = new LifePanel(simulation);
+		ControlPanel controlPanel = new ControlPanel(lifePanel);
 
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new MainFrame(golPanel, controlPanel);
+				new MainFrame(lifePanel, controlPanel);
 			}
 		});
 	}

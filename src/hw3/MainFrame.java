@@ -11,11 +11,11 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = -746668192754492357L;
 
-	public MainFrame(GameOfLifePanel golPanel, ControlPanel controlPanel) {
+	public MainFrame(LifePanel lifePanel, ControlPanel controlPanel) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		add(controlPanel, BorderLayout.NORTH);
-		add(golPanel, BorderLayout.SOUTH);
+		add(lifePanel, BorderLayout.SOUTH);
 		pack();
 
 		setVisible(true);

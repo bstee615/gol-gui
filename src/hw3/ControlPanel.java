@@ -15,27 +15,27 @@ public class ControlPanel extends JPanel {
 	 * Unique Serialization ID
 	 */
 	private static final long serialVersionUID = 6383142926743409714L;
-	private static final int playTimeout = 1000;
+	private static final int animationTimeoutMs = 1000;
 
-	private void addNextButton(GameOfLifePanel golPanel) {
-		JButton nextButton = new JButton("Next");
+	private void addNextFrameButton(LifePanel lifePanel) {
+		JButton nextButton = new JButton("Next Frame");
 		nextButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				golPanel.nextGeneration();
+				lifePanel.nextGeneration();
 			}
 		});
 		add(nextButton);
 	}
 
-	private void addPausePlayButton(GameOfLifePanel golPanel) {
+	private void addPausePlayButton(LifePanel lifePanel) {
 		JButton pausePlayButton = new JButton("Play");
 		ActionListener pausePlayButtonListener = new ActionListener() {
-			Timer timer = new Timer(playTimeout, new ActionListener() {
+			Timer timer = new Timer(animationTimeoutMs, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					golPanel.nextGeneration();
+					lifePanel.nextGeneration();
 				}
 			});
 
@@ -54,10 +54,10 @@ public class ControlPanel extends JPanel {
 		add(pausePlayButton);
 	}
 
-	public ControlPanel(GameOfLifePanel golPanel) {
+	public ControlPanel(LifePanel lifePanel) {
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		addNextButton(golPanel);
-		addPausePlayButton(golPanel);
+		addNextFrameButton(lifePanel);
+		addPausePlayButton(lifePanel);
 	}
 }
