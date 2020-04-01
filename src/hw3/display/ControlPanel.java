@@ -3,6 +3,7 @@ package hw3.display;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.Hashtable;
 
 import javax.swing.BoxLayout;
@@ -15,6 +16,12 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * Controls to interact with a {@link LifePanel}.
+ * 
+ * @author Ben Steenhoek
+ *
+ */
 public class ControlPanel extends JPanel {
 
 	/**
@@ -23,19 +30,26 @@ public class ControlPanel extends JPanel {
 	private static final long serialVersionUID = 6383142926743409714L;
 	// Move to the next generation every so many seconds.
 	Timer animationTimer;
+
+	/**
+	 * Default FPS for simulation animation.
+	 */
 	public static final int DEFAULT_ANIMATION_FPS = 5;
+	/**
+	 * Minimum FPS for simulation animation.
+	 */
 	public static final int ANIMATION_FPS_MIN = 1;
+	/**
+	 * Maximum FPS for simulation animation.
+	 */
 	public static final int ANIMATION_FPS_MAX = 30;
 
-	private ImageIcon playButtonDisplay;
-	private ImageIcon pauseButtonDisplay;
-	private ImageIcon nextButtonDisplay;
-
+	/**
+	 * Construct a ControlPanel with all elements initialized.
+	 * 
+	 * @param lifePanel The LifePanel this panel interacts with.
+	 */
 	public ControlPanel(LifePanel lifePanel) {
-		playButtonDisplay = new ImageIcon(getClass().getResource("resources/resume_co.png"));
-		pauseButtonDisplay = new ImageIcon(getClass().getResource("resources/suspend_co.png"));
-		nextButtonDisplay = new ImageIcon(getClass().getResource("resources/stepover_co.png"));
-
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		animationTimer = new Timer(1000 / DEFAULT_ANIMATION_FPS, new ActionListener() {
 			@Override
@@ -88,15 +102,26 @@ public class ControlPanel extends JPanel {
 	 * @param lifePanel A reference to our simulation's display.
 	 */
 	private void addNextGenerationButton(LifePanel lifePanel) {
-		JButton nextButton = new JButton(nextButtonDisplay);
-		nextButton.addActionListener(new ActionListener() {
+		JButton button = new JButton();
+		setButtonDisplay(button, "stepover_co.png", "Next Generation");
+
+		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				lifePanel.nextGeneration();
 			}
 		});
-		add(nextButton);
+		add(button);
+	}
+
+	private void setButtonDisplay(JButton button, String iconUrl, String backupText) {
+		URL url = ControlPanel.class.getResource(iconUrl);
+		if (url != null) {
+			button.setIcon(new ImageIcon(url));
+		} else {
+			button.setText(backupText);
+		}
 	}
 
 	/**
@@ -106,7 +131,9 @@ public class ControlPanel extends JPanel {
 	 * @param lifePanel A reference to our simulation's display.
 	 */
 	private void addPausePlayButton(LifePanel lifePanel) {
-		JButton pausePlayButton = new JButton(playButtonDisplay);
+		JButton button = new JButton();
+		setButtonDisplay(button, "resume_co.png", "Play");
+
 		ActionListener pausePlayButtonListener = new ActionListener() {
 			@Override
 			// Move next generation, then toggle timer/label text
@@ -114,15 +141,15 @@ public class ControlPanel extends JPanel {
 				lifePanel.nextGeneration();
 
 				if (animationTimer.isRunning()) {
-					pausePlayButton.setIcon(playButtonDisplay);
+					setButtonDisplay(button, "resume_co.png", "Play");
 					animationTimer.stop();
 				} else {
-					pausePlayButton.setIcon(pauseButtonDisplay);
+					setButtonDisplay(button, "suspend_co.png", "Pause");
 					animationTimer.restart();
 				}
 			}
 		};
-		pausePlayButton.addActionListener(pausePlayButtonListener);
-		add(pausePlayButton);
+		button.addActionListener(pausePlayButtonListener);
+		add(button);
 	}
 }

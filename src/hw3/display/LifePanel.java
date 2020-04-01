@@ -18,24 +18,38 @@ public class LifePanel extends JPanel {
 	public static final int gridCellSize = 20;
 	public static final int minimumGridWidth = 30 * gridCellSize;
 
-	public static final Color inactiveColor = Color.lightGray;
-	public static final Color activeColor = Color.BLACK;
+	/**
+	 * Color for inactive grid squares.
+	 */
+	public static final Color INACTIVE_COLOR = Color.lightGray;
+	/**
+	 * Color for active grid squares (inside the simulation).
+	 */
+	public static final Color ACTIVE_COLOR = Color.BLACK;
 
 	private Life simulation;
 
+	/**
+	 * Constructor for LifePanel.
+	 * 
+	 * @param simulation The Life simulation this panel will display
+	 */
 	public LifePanel(Life simulation) {
 		this.simulation = simulation;
 	}
 
 	/**
 	 * Move to the next generation and update the display. Call this method rather
-	 * than {@link simulation#nextGeneration()}.
+	 * than {@link Life#nextGeneration()}.
 	 */
 	public void nextGeneration() {
 		simulation.nextGeneration();
 		repaint();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Dimension getPreferredSize() {
 		int squareWidth = Math.max(simulation.getRows(), simulation.getColumns());
@@ -55,7 +69,7 @@ public class LifePanel extends JPanel {
 		final int gridHeight = getPreferredSize().height / gridCellSize;
 
 		// Draw a gray grid over the whole thing
-		g.setColor(inactiveColor);
+		g.setColor(INACTIVE_COLOR);
 		for (int row = 0; row < gridWidth; row++) {
 			for (int col = 0; col < gridHeight; col++) {
 				g.drawRect(gridCellSize * col, gridCellSize * row, gridCellSize, gridCellSize);
@@ -63,7 +77,7 @@ public class LifePanel extends JPanel {
 		}
 
 		// Display the cells in the center
-		g.setColor(activeColor);
+		g.setColor(ACTIVE_COLOR);
 
 		// How many cells offset to put the automaton in the center
 		final int rowOffset = (gridWidth / 2) - (simulation.getRows() / 2);
@@ -82,6 +96,9 @@ public class LifePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void paint(Graphics g) {
 		g.clearRect(0, 0, getWidth(), getHeight());

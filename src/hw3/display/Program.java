@@ -1,9 +1,5 @@
 package hw3.display;
 
-import javax.swing.SwingUtilities;
-
-import hw3.Life;
-
 public class Program {
 
 	// @formatter:off
@@ -19,17 +15,13 @@ public class Program {
 	public static final int[] born = { 3 };
 	public static final int[] survive = { 2, 3 };
 
+	/**
+	 * Runs a GOL simulation with an example grid & rules.
+	 * 
+	 * @param args Command line arguments.
+	 */
 	public static void main(String args[]) {
-		Life simulation = new Life(grid, born, survive);
-		LifePanel lifePanel = new LifePanel(simulation);
-		ControlPanel controlPanel = new ControlPanel(lifePanel);
-
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				new MainFrame(lifePanel, controlPanel);
-			}
-		});
+		LifeGui.launchGui(grid, born, survive);
 	}
 
 }
