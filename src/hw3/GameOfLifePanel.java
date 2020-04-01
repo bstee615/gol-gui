@@ -13,8 +13,8 @@ public class GameOfLifePanel extends JPanel {
 	 * Unique Serialization ID
 	 */
 	private static final long serialVersionUID = 1L;
-	public static final int gridSize = 10;
-	public static final int minimumWidth = 50 * gridSize;
+	public static final int gridSize = 20;
+	public static final int minimumWidth = 30 * gridSize;
 
 	private static final Color inactive = Color.lightGray;
 	private static final Color active = Color.BLACK;
@@ -54,11 +54,38 @@ public class GameOfLifePanel extends JPanel {
 	}
 
 	private void drawGrid(Graphics g) {
-		for (int row = getGridWidth() - 1; row >= 0; row -= 1) {
-			for (int col = getGridHeight() - 1; col >= 0; col -= 1) {
-				Rectangle gridSquare = new Rectangle(gridSize * col, gridSize * row, gridSize, gridSize);
+		final int rowOffset = (getGridWidth() / 2) - (simulation.getRows() / 2);
+		final int colOffset = displaycol - ((getGridHeight() / 2) - (simulation.getColumns() / 2));
+		for (int displayrow = getGridWidth() - 1; displayrow >= 0; displayrow -= 1) {
+			for (int displaycol = getGridHeight() - 1; displaycol >= 0; displaycol -= 1) {
+				// Display the cells in the center
+				int row = displayrow - rowOffset;
+				int col = displaycol - colOffset;
+				Rectangle gridSquare = new Rectangle(gridSize * displaycol, gridSize * displayrow, gridSize, gridSize);
 
-				if (row < simulation.getRows() && col < simulation.getColumns()) {
+				if (row >= 0 && col >= 0 && row < simulation.getRows() && col < simulation.getColumns()) {
+//					Skip
+					g.setColor(active);
+//
+//					if (simulation.getCell(row, col).isAlive()) {
+//						g.fillRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
+//					} else {
+//						g.drawRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
+//					}
+				} else {
+					g.setColor(inactive);
+					g.drawRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
+				}
+			}
+		}
+		for (int displayrow = getGridWidth() - 1; displayrow >= 0; displayrow -= 1) {
+			for (int displaycol = getGridHeight() - 1; displaycol >= 0; displaycol -= 1) {
+				// Display the cells in the center
+				int row = displayrow - rowOffset;
+				int col = displaycol - colOffset;
+				Rectangle gridSquare = new Rectangle(gridSize * displaycol, gridSize * displayrow, gridSize, gridSize);
+
+				if (row >= 0 && col >= 0 && row < simulation.getRows() && col < simulation.getColumns()) {
 					g.setColor(active);
 
 					if (simulation.getCell(row, col).isAlive()) {
@@ -67,8 +94,8 @@ public class GameOfLifePanel extends JPanel {
 						g.drawRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
 					}
 				} else {
-					g.setColor(inactive);
-					g.drawRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
+//					g.setColor(inactive);
+//					g.drawRect(gridSquare.x, gridSquare.y, gridSquare.width, gridSquare.height);
 				}
 			}
 		}
