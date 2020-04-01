@@ -141,7 +141,7 @@ public class ControlPanel extends JPanel {
 				lifePanel.nextGeneration();
 
 				if (animationTimer.isRunning()) {
-					setButtonDisplay(button, "resources/resume_co.png", "Play");
+					setButtonDisplay(button, "resume_co.png", "Play");
 					animationTimer.stop();
 				} else {
 					setButtonDisplay(button, "suspend_co.png", "Pause");
